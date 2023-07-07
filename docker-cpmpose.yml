@@ -1,0 +1,15 @@
+version: "3"
+services:
+  service-watcher:
+    build: ./
+    image: wx-chat
+    command: /bin/sh -c "gradle clean build -x test bootRun"
+    restart: always
+    volumes:
+      - ./:/deploy
+    ports:
+      - 9001:8080
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
