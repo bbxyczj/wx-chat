@@ -4,14 +4,18 @@ plugins {
     id 'java'
 }
 
-group = 'com.talentxiaohutu'
-version = '0.0.1-SNAPSHOT'
+group = 'com.talent'
+version = '0.1.1'
 sourceCompatibility = '1.8'
 
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    all*.exclude group: 'ch.qos.logback', module: 'logback-classic'
+    all*.exclude group: 'ch.qos.logback', module: 'logback-core'
+    all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+    all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }
 
 repositories {
@@ -19,8 +23,22 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
+    implementation  'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'com.thoughtworks.xstream:xstream:1.4.4'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'org.slf4j:slf4j-simple'
+    implementation  'org.projectlombok:lombok'
+    implementation  'cn.hutool:hutool-all:5.8.12'
+    implementation  'org.apache.commons:commons-lang3'
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: '32.1.1-jre'
+
+    implementation 'com.github.plexpt:chatgpt:4.1.2'
+    implementation 'org.dom4j:dom4j:2.1.1'
+    implementation 'com.thoughtworks.xstream:xstream:1.4.4'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'

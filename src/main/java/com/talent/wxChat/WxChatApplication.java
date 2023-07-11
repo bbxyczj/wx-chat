@@ -1,4 +1,4 @@
-package com.talentxiaohutu.wxChat;
+package com.talent.wxChat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,26 @@
-# 应用服务 WEB 访问端口
+spring:
+  application:
+    name: wx-chat
+  # 默认 dev 环境
+  profiles:
+    active: dev
 server:
-  port: 8080
+  port: 8899
+logging:
+  config: classpath:config/log4j2-dev.xml
+wx:
+  tips:
+    subscribeTip: "感谢关注～,作为你的私人助手,有什么问题都可以问我哦！"
+    chatGpt: "网站：https://www.sswqq.top   密码：ayxzs"
+    aiYa: "我在哎鸭AI，快来一起玩AI绘图吧：https://wxaurl.cn/4uvgEjnHvmo"
+    limitTip: "抱歉，当前提问额度已用尽，请${checkPeriod}分钟后再试！没玩够？回复”哎鸭“体验最新版小程序"
+    #防刷次数
+    maxTimes: 15
+    #防刷时间间隔单位：分钟
+    checkPeriod: 30
+    # 会话上下文上限
+    relatedSessions: 10
 
+wall.proxy: true
+openAi:
+  apiKey: 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

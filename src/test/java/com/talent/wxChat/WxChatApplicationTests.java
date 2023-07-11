@@ -1,4 +1,4 @@
-package com.talentxiaohutu.wxChat;
+package com.talent.wxChat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

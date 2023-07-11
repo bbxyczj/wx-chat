@@ -1,0 +1,7 @@
+# 微信相关
+wx:
+  # 微信公众平台
+  mp:
+    token: MGJIJaQnnjGuhPDm
+    appId: wx647541fa033d13fe
+    secret: 3a0754ab55206537b3c2d07d0c917ab7

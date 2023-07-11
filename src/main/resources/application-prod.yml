@@ -1,0 +1,12 @@
+logging:
+  config: classpath:config/log4j2-prod.xml
+# 微信相关
+wx:
+  # 微信公众平台
+  mp:
+    token: xxx
+    aesKey: xxx
+    appId: xxx
+    secret: xxx
+
+wall.proxy: false

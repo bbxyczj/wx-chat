@@ -1,0 +1,8 @@
+# 微信相关
+wx:
+  # 微信公众平台
+  mp:
+    token: xxx
+    aesKey: xxx
+    appId: xxx
+    secret: xxx
