@@ -71,7 +71,7 @@ public class ChatGptService {
             }
             //会话上下文限制
             if (msgHistory.size() > tipsConfig.getRelatedSessions() * 2) {
-                msgHistory.subList(msgHistory.size() - tipsConfig.getRelatedSessions() * 2, msgHistory.size());
+                messages.addAll(msgHistory.subList(msgHistory.size() - tipsConfig.getRelatedSessions() * 2, msgHistory.size()));
             } else {
                 messages.addAll(msgHistory);
             }

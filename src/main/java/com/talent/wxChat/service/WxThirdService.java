@@ -51,7 +51,7 @@ public class WxThirdService {
         try {
             log.info("推送客服消息入参{}",kfMessage);
             String result = HttpUtil.post(KF_MSG_URL.replace("ACCESS_TOKEN", getAccessToken()),
-                    BeanUtil.beanToMap(kfMessage));
+                    JSONUtil.toJsonStr(kfMessage));
             log.info("推送客服消息成功：{}",result);
         } catch (Exception e) {
             log.error("推送客服消息失败",e);
@@ -65,7 +65,7 @@ public class WxThirdService {
         try {
             log.info("推送客服输入状态入参{}",inputStatusMessage);
             String result = HttpUtil.post(INPUT_STATUS_URL.replace("ACCESS_TOKEN", getAccessToken()),
-                    BeanUtil.beanToMap(inputStatusMessage));
+                    JSONUtil.toJsonStr(inputStatusMessage));
             log.info("推送客服输入状态成功：{}",result);
         } catch (Exception e) {
             log.error("推送客服输入状态失败",e);
