@@ -59,5 +59,14 @@ public class MessageService {
         }
     }
 
+    public void messageRespSuccess(HttpServletResponse response) {
+        try {
+            PrintWriter out = response.getWriter();
+            out.write("success");
+        } catch (IOException e) {
+            log.error(e.getMessage(),e);
+        }
+    }
+
 
 }

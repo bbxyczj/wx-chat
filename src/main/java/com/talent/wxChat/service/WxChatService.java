@@ -68,6 +68,7 @@ public class WxChatService {
             Message message = chatGptService.chatCompletion(msg);
             wxThirdService.pushKfMsg(msg,message.getContent());
         });
+        messageService.messageRespSuccess(response);
         return;
     }
 
