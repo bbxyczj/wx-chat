@@ -1,6 +1,14 @@
-FROM ringcentral/gradle:6.5.1-jdk8u202
+# 设置基础镜像
+FROM adoptopenjdk:8-jre-hotspot
 
-RUN mkdir /deploy
-WORKDIR /deploy
+# 添加 Gradle Wrapper 文件到镜像中
+ADD gradlew .
+ADD gradle gradle
 
-EXPOSE 8080
+# 执行 Gradle 构建，将生成的构建结果（jar文件）复制到镜像中
+ADD build/libs/wx-chat-0.1.1.jar wx-chat.jar
+
+EXPOSE 8899
+
+# 设置项目启动命令
+CMD ["java", "-jar", "wx-chat.jar"]
