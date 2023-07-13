@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @Author XE-CZJ
@@ -38,17 +39,19 @@ public class WxChatController {
         if(b&&StrUtil.isNotBlank(commonParam.getEchostr())){
             return commonParam.getEchostr();
         }
-        return null;
+        return "";
     }
 
     @PostMapping("wxChat")
-    public void chat(CommonParam commonParam, HttpServletRequest request, HttpServletResponse response){
+    public void chat(CommonParam commonParam, HttpServletRequest request, HttpServletResponse response) throws IOException {
         boolean b = checkSignatureService.checkSignature(commonParam);
         //解析入参
         if(b){
             TextMessage textMessage = messageService.messageRequest(request);
             //处理请求
             wxChatService.doChat(textMessage,response);
+        }else {
+            response.getWriter().println("");
         }
     }
 }

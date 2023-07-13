@@ -1,6 +1,7 @@
 package com.talent.wxChat.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.json.JSONUtil;
 import com.talent.wxChat.model.TextMessage;
 import com.talent.wxChat.util.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -46,12 +47,14 @@ public class MessageService {
 
     public void messageResp(TextMessage param,HttpServletResponse response,String txt) {
         try {
+            log.info("返回微信消息 param:{}, txt:{}",param,txt);
             TextMessage newObj = new TextMessage();
             newObj.setFromUserName(param.getToUserName());
             newObj.setToUserName(param.getFromUserName());
             newObj.setContent(txt);
             newObj.setCreateTime(System.currentTimeMillis());
             String result = MessageUtil.textMessageToXml(newObj);
+            response.setContentType("application/xml; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.write(result);
         } catch (IOException e) {
@@ -61,6 +64,7 @@ public class MessageService {
 
     public void messageRespSuccess(HttpServletResponse response) {
         try {
+            log.info("返回微信消息 success");
             PrintWriter out = response.getWriter();
             out.write("success");
         } catch (IOException e) {

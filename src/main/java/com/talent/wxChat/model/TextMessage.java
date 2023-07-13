@@ -1,14 +1,35 @@
 package com.talent.wxChat.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * @author xiefc
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
-public class TextMessage extends BaseMessage{
+public class TextMessage {
+
+
+    private String MsgId;
+
+    /**
+     * 开发者微信号
+     */
+    private String ToUserName;
+
+    /**
+     * 发送方帐号（一个OpenID）
+     */
+    private String FromUserName;
+
+    /**
+     * 创建时间
+     */
+    private long CreateTime;
+
+
+    private String Event;
+
+
     /**
      * 消息类型
      * @ApiModelProperty(value = "消息类型", hidden = true)

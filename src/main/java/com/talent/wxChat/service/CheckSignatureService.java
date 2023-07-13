@@ -30,8 +30,8 @@ public class CheckSignatureService {
         ArrayList<String> list = new ArrayList<>();
         //定义微信接口配置的token，同微信账号页面中配置的token值保持一致
         list.add(wxConfig.getToken());
-        list.add(commonParam.getTimestamp().toString());
-        list.add(commonParam.getNonce().toString());
+        list.add(String.valueOf(commonParam.getTimestamp()));
+        list.add(String.valueOf(commonParam.getNonce()));
         StringBuilder content = new StringBuilder();
         Collections.sort(list);
         for (String str : list) {

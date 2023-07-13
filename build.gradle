@@ -25,8 +25,6 @@ configurations {
         extendsFrom annotationProcessor
     }
     all*.exclude group: 'ch.qos.logback', module: 'logback-classic'
-    all*.exclude group: 'ch.qos.logback', module: 'logback-core'
-    all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
     all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }
 
@@ -40,7 +38,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'com.thoughtworks.xstream:xstream:1.4.4'
     implementation 'org.slf4j:slf4j-api'
-    implementation 'org.slf4j:slf4j-simple'
     implementation  'org.projectlombok:lombok'
     implementation  'cn.hutool:hutool-all:5.8.12'
     implementation  'org.apache.commons:commons-lang3'

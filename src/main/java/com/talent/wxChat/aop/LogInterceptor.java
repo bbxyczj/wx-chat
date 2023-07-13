@@ -1,60 +1,53 @@
 package com.talent.wxChat.aop;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import cn.hutool.json.JSONUtil;
+import com.google.common.base.Stopwatch;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StopWatch;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.lang.reflect.Method;
+import java.util.concurrent.TimeUnit;
 
-/**
- * 请求响应日志 AOP
- *
- *  
- *   
- **/
 @Aspect
 @Component
-@Slf4j
 public class LogInterceptor {
 
+    private static final Logger log = LoggerFactory.getLogger(LogInterceptor.class);
+    private static final ThreadLocal<Stopwatch> STOP_WATCH_INFO = new ThreadLocal<>();
 
-    /**
-     * 执行拦截
-     */
-    @Around("execution(* com.talentxiaohutu.wxChat.controller.*.*(..))")
-    public Object doInterceptor(ProceedingJoinPoint point) throws Throwable {
+    @Pointcut("execution(public * com.talent.wxChat.controller..*(..))")
+    public void log(){}
 
-        // 计时
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-        // 获取请求路径
-        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-        HttpServletRequest httpServletRequest = ((ServletRequestAttributes) requestAttributes).getRequest();
-        // 生成请求唯一 id
-        String requestId = UUID.randomUUID().toString();
-        String url = httpServletRequest.getRequestURI();
-        // 获取请求参数
-        Object[] args = point.getArgs();
-        String reqParam = "[" + StringUtils.join(args, ", ") + "]";
-        // 输出请求日志
-        log.info("request start，id: {}, path: {}, ip: {}, params: {}", requestId, url,
-                httpServletRequest.getRemoteHost(), reqParam);
-        // 执行原方法
-        Object result = point.proceed();
-        stopWatch.stop();
-        long totalTimeMillis = stopWatch.getTotalTimeMillis();
-        // 输出响应日志
-        log.info("request end, id: {}, cost: {}ms result:{}", requestId, totalTimeMillis,result);
-        return result;
+    @AfterReturning(returning = "object", pointcut = "log()")
+    public void after(JoinPoint joinPoint, Object object) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        log.info("{}方法返回参数：{} 耗时：{}ms", method.getName(), JSONUtil.toJsonStr(object),
+                STOP_WATCH_INFO.get().elapsed(TimeUnit.MILLISECONDS));
+    }
+
+    @Before("log()")
+    public void before(JoinPoint joinPoint) {
+        if (STOP_WATCH_INFO.get() != null) {
+            // 异常情况不走after
+            STOP_WATCH_INFO.remove();
+        }
+        STOP_WATCH_INFO.set(Stopwatch.createStarted());
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        Object object = null;
+        if (null != joinPoint.getArgs() && joinPoint.getArgs().length > 0) {
+            object = joinPoint.getArgs()[0];
+        }
+        log.info("{}方法请求参数：{}", method.getName(), JSONUtil.toJsonStr(object));
+
     }
 
 }
-

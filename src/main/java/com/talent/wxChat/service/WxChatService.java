@@ -6,12 +6,14 @@ import com.talent.wxChat.model.TextMessage;
 import com.talent.wxChat.model.UserCacheBean;
 import com.talent.wxChat.thread.ThisThreadPool;
 import com.talent.wxChat.util.CacheUtil;
+import com.talent.wxChat.util.ParagraphSplitter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Author XE-CZJ
@@ -66,7 +68,16 @@ public class WxChatService {
         ThisThreadPool.threadPoolTaskExecutor.execute(() -> {
             log.info("开始异步对话ChatGpt");
             Message message = chatGptService.chatCompletion(msg);
-            wxThirdService.pushKfMsg(msg,message.getContent());
+            //分批推送，最多5次
+            if(message.getContent().length()<=600){
+                wxThirdService.pushKfMsg(msg,message.getContent());
+            }else {
+                List<String> list = ParagraphSplitter.reorganizeIntoParagraphs(message.getContent(), 600);
+                if(list.size()>5){
+                    list=list.subList(0,5);
+                }
+                list.forEach(e->wxThirdService.pushKfMsg(msg,e));
+            }
         });
         messageService.messageRespSuccess(response);
         return;

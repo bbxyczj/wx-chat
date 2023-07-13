@@ -1,9 +1,9 @@
 package com.talent.wxChat.util;
 
 import cn.hutool.core.io.BOMInputStream;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.talent.wxChat.model.TextMessage;
-import com.talent.wxChat.model.Image;
-import com.talent.wxChat.model.ImageMessage;
 import com.thoughtworks.xstream.XStream;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
@@ -64,9 +64,9 @@ public class MessageUtil {
             SAXReader reader = new SAXReader();
             InputStream in = request.getInputStream();
             log.info("request body:{}",in);
-            BOMInputStream bomInputStream = new BOMInputStream(request.getInputStream(),"UTF-8");
+            BOMInputStream bomInputStream = new BOMInputStream(in,"UTF-8");
             //转成xml
-            Document doc = reader.read(request.getInputStream());
+            Document doc = reader.read(bomInputStream);
 
             Element root = doc.getRootElement();
             List<Element> list = root.elements();
@@ -111,12 +111,7 @@ public class MessageUtil {
 
     }
 
-    public static String textImgToXml(ImageMessage imageMessage){
-        XStream xstream = new XStream();
-        xstream.alias("xml", imageMessage.getClass());
-        return xstream.toXML(imageMessage);
 
-    }
 
     public static String initText(String toUserName, String fromUserName, String content){
         TextMessage text = new TextMessage();
@@ -126,21 +121,6 @@ public class MessageUtil {
         text.setCreateTime(System.currentTimeMillis());
         text.setContent(content);
         return textMessageToXml(text);
-    }
-
-    public static String initImgMessage(String toUserName, String fromUserName,String mediaId){
-        String message = null;
-        Image image = new Image();
-        image.setMediaId(mediaId);
-
-        ImageMessage imageMessage = new ImageMessage();
-        imageMessage.setFromUserName(toUserName);
-        imageMessage.setToUserName(fromUserName);
-        imageMessage.setMsgType(MESSAGE_IMAGE);
-        imageMessage.setCreateTime(System.currentTimeMillis());
-        imageMessage.setImage(image);
-        message = textImgToXml(imageMessage);
-        return message;
     }
 }
 
