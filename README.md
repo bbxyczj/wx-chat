@@ -24,6 +24,7 @@ java -jar wx-chat-0.1.1.jar
 
 
 ## 使用体验
+![1](file/640.png)
 
 [我们接入AI对话功能啦](https://mp.weixin.qq.com/s/PKHmMYQh7uUsv_GtR4UOwg)
 
@@ -43,5 +44,7 @@ java -jar wx-chat-0.1.1.jar
 ![1](file/b730498483385daf7fc9e33bd50a16d.jpg)
 
 ## 另有小程序接入体验（支持AI绘图）
+![2](file/20230620192517.png)
+
 
 ![2](file/13331733652156662.png)
