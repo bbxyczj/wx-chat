@@ -15,7 +15,7 @@ wx:
     subscribeTip: "感谢关注～,作为你的私人助手,有什么问题都可以问我哦！"
     chatGpt: "xxxx"
     aiYa: "xxxx"
-    limitTip: "抱歉，当前提问额度已用尽，请${checkPeriod}分钟后再试！"
+    limitTip: "抱歉，当前提问额度已用尽，请${wx.tips.checkPeriod}分钟后再试！"
     #防刷次数wx
     maxTimes: 15
     #防刷时间间隔单位：分钟
