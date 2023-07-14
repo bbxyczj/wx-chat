@@ -10,6 +10,29 @@
 git clone https://github.com/bbxyczj/wx-chat.git
 ```
 
+**微信配置**
+
+#### 1.配置你服务器的ip白名单
+![1](file/20230714090421.png)
+
+#### 1.启用服务器配置，指定token和服务器域名
+
+![1](file/20230714090430.png)
+
+
+**更新配置**
+
+配置 | 来源 |	描述|
+---|---|---|
+appId|微信公众平台|![1](file/20230714090421.png)|
+secret|微信公众平台|![1](file/20230714090421.png)|
+token|微信公众平台|![1](file/20230714090430.png)|
+subscribeTip|关注提示语|自定义|
+chatGpt|指定输入提示语|自定义|
+aiYa|指定输入提示语|自定义|
+openAi.apiKey|openAI api key|[openAi](https://platform.openai.com/)|
+
+
 **运行服务**
 
 ```bash
