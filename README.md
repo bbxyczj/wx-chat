@@ -70,4 +70,4 @@ java -jar wx-chat-0.1.1.jar
 ![2](file/20230620192517.png)
 
 
-![2](file/13331733652156662.png)
+![2](file/gh_6ddb53f523a6_430.jpg)
