@@ -61,7 +61,7 @@ public class ChatGptService {
 
 
     public  Message chatCompletion(TextMessage message) {
-        Message res = Message.ofAssistant("抱歉，问题太难了，出错了！回复”哎鸭“体验最新版小程序");
+        Message res = Message.ofAssistant("抱歉，问题太难了，出错了！");
         try {
             List<Message> messages=new ArrayList<>();
             messages.add(Message.ofSystem("You are a helpful assistant."));
